@@ -9,8 +9,9 @@ export const createContactSchema = Joi.object({
   email: Joi.string().email().required(),
   phone: Joi.string()
     .min(5)
-    .pattern(/^\d[\d\- ]*\d$/)
+    .pattern(/^\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
     .required(),
+  favorite: Joi.boolean(),
 });
 
 export const updateContactSchema = Joi.object({
@@ -21,5 +22,10 @@ export const updateContactSchema = Joi.object({
   email: Joi.string().email(),
   phone: Joi.string()
     .min(5)
-    .pattern(/^\d[\d\- ]*\d$/),
+    .pattern(/^\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/),
+  favorite: Joi.boolean(),
+});
+
+export const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
 });
