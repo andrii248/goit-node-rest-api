@@ -1,28 +1,17 @@
 import Joi from "joi";
+import { phoneRegex, nameRegex } from "../constants/contact-constants.js";
 
 export const createContactSchema = Joi.object({
-  name: Joi.string()
-    .min(3)
-    .max(30)
-    .pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)
-    .required(),
+  name: Joi.string().min(3).max(30).pattern(nameRegex).required(),
   email: Joi.string().email().required(),
-  phone: Joi.string()
-    .min(5)
-    .pattern(/^\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
-    .required(),
+  phone: Joi.string().min(5).pattern(phoneRegex).required(),
   favorite: Joi.boolean(),
 });
 
 export const updateContactSchema = Joi.object({
-  name: Joi.string()
-    .min(3)
-    .max(30)
-    .pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/),
+  name: Joi.string().min(3).max(30).pattern(nameRegex),
   email: Joi.string().email(),
-  phone: Joi.string()
-    .min(5)
-    .pattern(/^\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/),
+  phone: Joi.string().min(5).pattern(phoneRegex),
   favorite: Joi.boolean(),
 });
 
