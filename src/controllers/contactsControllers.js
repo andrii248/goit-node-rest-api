@@ -33,3 +33,10 @@ export const updateContact = async (req, res) => {
   if (!result) throw HttpError(404, `Contact with id=${id} not found`);
   res.json(result);
 };
+
+export const updateFavorite = async (req, res) => {
+  const { id } = req.params;
+  const result = await contactsService.updateStatusContact(id, req.body);
+  if (!result) throw HttpError(404);
+  res.json(result);
+};

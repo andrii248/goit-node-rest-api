@@ -1,8 +1,10 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import "dotenv/config";
 
-import contactsRouter from "./routes/contactsRouter.js";
+import connectDatabase from "./src/db/connectDatabase.js";
+import contactsRouter from "./src/routes/contactsRouter.js";
 
 const app = express();
 
@@ -20,6 +22,8 @@ app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
 });
+
+await connectDatabase();
 
 app.listen(3000, () => {
   console.log("Server is running. Use our API on port: 3000");
