@@ -2,6 +2,16 @@ import { DataTypes } from "sequelize";
 import sequelize from "../sequelize.js";
 
 const Contact = sequelize.define("contact", {
+  owner: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "users",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
