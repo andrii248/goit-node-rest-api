@@ -6,8 +6,10 @@ import {
   loginController,
   getCurrentController,
   logoutUserController,
+  updateAvatarController,
 } from "../controllers/authControllers.js";
 import authenticate from "../middlewares/authenticate.js";
+import upload from "../middlewares/upload.js";
 
 const authRouter = Router();
 
@@ -22,5 +24,12 @@ authRouter.post("/login", validateBody(authLoginSchema), loginController);
 authRouter.get("/current", authenticate, getCurrentController);
 
 authRouter.post("/logout", authenticate, logoutUserController);
+
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  updateAvatarController,
+);
 
 export default authRouter;
