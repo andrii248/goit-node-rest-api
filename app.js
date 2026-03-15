@@ -3,11 +3,21 @@ import morgan from "morgan";
 import cors from "cors";
 import "dotenv/config";
 
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+
 import connectDatabase from "./src/db/connectDatabase.js";
 import contactsRouter from "./src/routes/contactsRouter.js";
 import authRouter from "./src/routes/authRouter.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+console.log("Public path:", join(__dirname, "public"));
+
 const app = express();
+
+app.use(express.static(join(__dirname, "public")));
 
 app.use(morgan("tiny"));
 app.use(cors());
