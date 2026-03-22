@@ -1,10 +1,12 @@
-import * as authServices from "../services/authServices.js";
 import path from "node:path";
 import fs from "node:fs/promises";
+
+import * as authServices from "../services/authServices.js";
 import HttpError from "../helpers/HttpError.js";
 
 export const registerController = async (req, res) => {
   const newUser = await authServices.registerUser(req.body);
+
   res.status(201).json({
     user: {
       email: newUser.email,
@@ -18,8 +20,29 @@ export const loginController = async (req, res) => {
   res.json(result);
 };
 
+export const verifyEmailController = async (req, res) => {
+  const { verificationToken } = req.params;
+
+  await authServices.verifyUserEmail(verificationToken);
+
+  res.status(200).json({
+    message: "Verification successful",
+  });
+};
+
+export const resendVerificationEmailController = async (req, res) => {
+  const { email } = req.body;
+
+  await authServices.resendVerificationEmail(email);
+
+  res.status(200).json({
+    message: "Verification email sent",
+  });
+};
+
 export const getCurrentController = async (req, res) => {
-  const { subscription, email } = req.user;
+  const { email, subscription } = req.user;
+
   res.json({
     email,
     subscription,
